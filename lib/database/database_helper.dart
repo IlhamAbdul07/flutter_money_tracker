@@ -85,7 +85,8 @@ class DatabaseHelper {
         tanggal_mulai TEXT NOT NULL,
         tanggal_selesai TEXT NOT NULL,
         FOREIGN KEY (id_jenis_pengeluaran) REFERENCES jenis_pengeluaran (id_jenis_pengeluaran) ON DELETE RESTRICT,
-        FOREIGN KEY (id_icon) REFERENCES icon (id_icon) ON DELETE RESTRICT
+        FOREIGN KEY (id_icon) REFERENCES icon (id_icon) ON DELETE RESTRICT,
+        CHECK(tanggal_selesai > tanggal_mulai)
       )''');
 
     await db.execute('''

@@ -30,7 +30,7 @@ class PengeluaranModel {
     return {
       'id_pengeluaran': idPengeluaran,
       'nominal': nominal,
-      'tanggal': tanggal.toIso8601String(),
+      'tanggal': tanggal.toIso8601String().substring(0, 10),
       'id_tujuan': idTujuan,
       'id_rekening': idRekening,
       'catatan': catatan,

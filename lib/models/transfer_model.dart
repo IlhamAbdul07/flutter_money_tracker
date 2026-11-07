@@ -34,7 +34,7 @@ class TransferModel {
       'nominal_transfer': nominalTransfer,
       'sumber_rekening_id': sumberRekId,
       'tujuan_rekening_id': tujuanRekId,
-      'tanggal_transfer': tanggalTransfer.toIso8601String(),
+      'tanggal_transfer': tanggalTransfer.toIso8601String().substring(0, 10),
       'catatan_transfer': catatanTransfer,
     };
   }

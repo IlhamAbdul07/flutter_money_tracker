@@ -36,8 +36,8 @@ class AnggaranModel {
       'nominal_anggaran': nominalAnggaran,
       'id_jenis_pengeluaran': idJenisPengeluaran,
       'id_icon': idIcon,
-      'tanggal_mulai': tanggalMulai.toIso8601String(),
-      'tanggal_selesai': tanggalSelesai.toIso8601String(),
+      'tanggal_mulai': tanggalMulai.toIso8601String().substring(0, 10),
+      'tanggal_selesai': tanggalSelesai.toIso8601String().substring(0, 10),
     };
   }
 }
