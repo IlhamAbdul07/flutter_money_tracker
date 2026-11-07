@@ -3,7 +3,7 @@ class TransferModel {
   final int nominalTransfer;
   final String sumberRekId;
   final String tujuanRekId;
-  final String tanggalTransfer;
+  final DateTime tanggalTransfer;
   String? catatanTransfer;
 
   TransferModel({
@@ -21,8 +21,10 @@ class TransferModel {
       nominalTransfer: (map['nominal_transfer'] as int),
       sumberRekId: (map['sumber_rekening_id'] as String),
       tujuanRekId: (map['tujuan_rekening_id'] as String),
-      tanggalTransfer: (map['tanggal_transfer'] as String),
-      catatanTransfer: map['catatan_transfer'] != null ? (map['catatan_transfer'] as String) : null,
+      tanggalTransfer: DateTime.parse(map['tanggal_transfer'] as String),
+      catatanTransfer: map['catatan_transfer'] != null
+          ? (map['catatan_transfer'] as String)
+          : null,
     );
   }
 
@@ -32,7 +34,7 @@ class TransferModel {
       'nominal_transfer': nominalTransfer,
       'sumber_rekening_id': sumberRekId,
       'tujuan_rekening_id': tujuanRekId,
-      'tanggal_transfer': tanggalTransfer,
+      'tanggal_transfer': tanggalTransfer.toIso8601String(),
       'catatan_transfer': catatanTransfer,
     };
   }

@@ -80,11 +80,11 @@ class DatabaseHelper {
         id_anggaran TEXT PRIMARY KEY,
         nama_anggaran TEXT NOT NULL,
         nominal_anggaran INTEGER NOT NULL,
-        id_rekening TEXT NOT NULL,
+        id_jenis_pengeluaran TEXT NOT NULL,
         id_icon TEXT NOT NULL,
-        created_at TEXT NOT NULL,
-        updated_at TEXT NOT NULL,
-        FOREIGN KEY (id_rekening) REFERENCES rekening (id_rekening) ON DELETE RESTRICT,
+        tanggal_mulai TEXT NOT NULL,
+        tanggal_selesai TEXT NOT NULL,
+        FOREIGN KEY (id_jenis_pengeluaran) REFERENCES jenis_pengeluaran (id_jenis_pengeluaran) ON DELETE RESTRICT,
         FOREIGN KEY (id_icon) REFERENCES icon (id_icon) ON DELETE RESTRICT
       )''');
 

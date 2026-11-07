@@ -2,19 +2,19 @@ class AnggaranModel {
   final String idAnggaran;
   final String namaAnggaran;
   final int nominalAnggaran;
-  final String idRekening;
+  final String idJenisPengeluaran;
   final String idIcon;
-  final String createdAt;
-  final String updatedAt;
+  final DateTime tanggalMulai;
+  final DateTime tanggalSelesai;
 
   AnggaranModel({
     required this.idAnggaran,
     required this.namaAnggaran,
     required this.nominalAnggaran,
-    required this.idRekening,
+    required this.idJenisPengeluaran,
     required this.idIcon,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.tanggalMulai,
+    required this.tanggalSelesai,
   });
 
   factory AnggaranModel.fromMap(Map<String, dynamic> map) {
@@ -22,10 +22,10 @@ class AnggaranModel {
       idAnggaran: (map['id_anggaran'] as String),
       namaAnggaran: (map['nama_anggaran'] as String),
       nominalAnggaran: (map['nominal_anggaran'] as int),
-      idRekening: (map['id_rekening'] as String),
+      idJenisPengeluaran: (map['id_jenis_pengeluaran'] as String),
       idIcon: (map['id_icon'] as String),
-      createdAt: (map['created_at'] as String),
-      updatedAt: (map['updated_at']as String),
+      tanggalMulai: DateTime.parse(map['tanggal_mulai'] as String),
+      tanggalSelesai: DateTime.parse(map['tanggal_selesai'] as String),
     );
   }
 
@@ -34,10 +34,10 @@ class AnggaranModel {
       'id_anggaran': idAnggaran,
       'nama_anggaran': namaAnggaran,
       'nominal_anggaran': nominalAnggaran,
-      'id_rekening': idRekening,
+      'id_jenis_pengeluaran': idJenisPengeluaran,
       'id_icon': idIcon,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
+      'tanggal_mulai': tanggalMulai.toIso8601String(),
+      'tanggal_selesai': tanggalSelesai.toIso8601String(),
     };
   }
 }

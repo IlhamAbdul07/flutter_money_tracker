@@ -1,7 +1,7 @@
 class PemasukanModel {
   final String idPemasukan;
   final int nominal;
-  final String tanggal;
+  final DateTime tanggal;
   final String idSumber;
   final String idRekening;
   String? catatan;
@@ -19,7 +19,7 @@ class PemasukanModel {
     return PemasukanModel(
       idPemasukan: (map['id_Pemasukan'] as String),
       nominal: (map['nominal'] as int),
-      tanggal: (map['tanggal'] as String),
+      tanggal: DateTime.parse(map['tanggal'] as String),
       idSumber: (map['id_sumber'] as String),
       idRekening: (map['id_rekening'] as String),
       catatan: map['catatan'] != null ? (map['catatan'] as String) : null,
@@ -30,11 +30,10 @@ class PemasukanModel {
     return {
       'id_Pemasukan': idPemasukan,
       'nominal': nominal,
-      'tanggal': tanggal,
+      'tanggal': tanggal.toIso8601String(),
       'id_sumber': idSumber,
       'id_rekening': idRekening,
       'catatan': catatan,
     };
   }
 }
-
