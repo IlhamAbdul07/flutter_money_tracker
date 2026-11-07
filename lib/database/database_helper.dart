@@ -24,9 +24,13 @@ class DatabaseHelper {
   }
 
   Future _createDB(Database db, int version) async {
-    await db.execute(
-      'CREATE TABLE icon (id_icon TEXT PRIMARY KEY, nama_icon TEXT NOT NULL UNIQUE, is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)))',
-    );
+    await db.execute('''
+      CREATE TABLE icon (
+      id_icon TEXT PRIMARY KEY, 
+      nama_icon TEXT NOT NULL UNIQUE, 
+      is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)))
+      ''');
+
     await db.execute('''
       CREATE TABLE rekening (
       id_rekening TEXT PRIMARY KEY, 
@@ -34,6 +38,7 @@ class DatabaseHelper {
       saldo INTEGER NOT NULL DEFAULT 0 ,
       is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)))
       ''');
+
     await db.execute('''
       CREATE TABLE jenis_pengeluaran (
         id_jenis_pengeluaran TEXT PRIMARY KEY,
@@ -42,6 +47,7 @@ class DatabaseHelper {
         is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)),
         FOREIGN KEY (id_icon) REFERENCES icon (id_icon) ON DELETE RESTRICT
       )''');
+
     await db.execute('''
       CREATE TABLE jenis_pemasukan (
         id_jenis_pemasukan TEXT PRIMARY KEY,
@@ -50,6 +56,7 @@ class DatabaseHelper {
         is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)),
         FOREIGN KEY (id_icon) REFERENCES icon (id_icon) ON DELETE RESTRICT
       )''');
+
     await db.execute('''
       CREATE TABLE tujuan_pengeluaran (
         id_tujuan TEXT PRIMARY KEY,
@@ -58,6 +65,7 @@ class DatabaseHelper {
         is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)),
         FOREIGN KEY (id_jenis_pengeluaran) REFERENCES jenis_pengeluaran (id_jenis_pengeluaran) ON DELETE RESTRICT
       )''');
+
     await db.execute('''
       CREATE TABLE sumber_pemasukan (
         id_sumber TEXT PRIMARY KEY,
@@ -65,6 +73,55 @@ class DatabaseHelper {
         sumber_pemasukan TEXT NOT NULL,
         is_active INTEGER NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)),
         FOREIGN KEY (id_jenis_pemasukan) REFERENCES jenis_pemasukan (id_jenis_pemasukan) ON DELETE RESTRICT
+      )''');
+
+    await db.execute('''
+      CREATE TABLE anggaran (
+        id_anggaran TEXT PRIMARY KEY,
+        nama_anggaran TEXT NOT NULL,
+        nominal_anggaran INTEGER NOT NULL,
+        id_rekening TEXT NOT NULL,
+        id_icon TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        FOREIGN KEY (id_rekening) REFERENCES rekening (id_rekening) ON DELETE RESTRICT,
+        FOREIGN KEY (id_icon) REFERENCES icon (id_icon) ON DELETE RESTRICT
+      )''');
+
+    await db.execute('''
+      CREATE TABLE pengeluaran (
+        id_pengeluaran TEXT PRIMARY KEY,
+        nominal INTEGER NOT NULL,
+        tanggal TEXT NOT NULL,
+        id_tujuan TEXT NOT NULL,
+        id_rekening TEXT NOT NULL,
+        catatan TEXT,
+        FOREIGN KEY (id_tujuan) REFERENCES tujuan_pengeluaran (id_tujuan) ON DELETE RESTRICT,
+        FOREIGN KEY (id_rekening) REFERENCES rekening (id_rekening) ON DELETE RESTRICT
+      )''');
+
+    await db.execute('''
+      CREATE TABLE pemasukan (
+        id_pemasukan TEXT PRIMARY KEY,
+        nominal INTEGER NOT NULL,
+        tanggal TEXT NOT NULL,
+        id_sumber TEXT NOT NULL,
+        id_rekening TEXT NOT NULL,
+        catatan TEXT,
+        FOREIGN KEY (id_sumber) REFERENCES sumber_pemasukan (id_sumber) ON DELETE RESTRICT,
+        FOREIGN KEY (id_rekening) REFERENCES rekening (id_rekening) ON DELETE RESTRICT
+      )''');
+
+    await db.execute('''
+      CREATE TABLE transfer (
+        id_transfer TEXT PRIMARY KEY,
+        nominal_transfer INTEGER NOT NULL,
+        sumber_rekening_id TEXT NOT NULL,
+        tujuan_rekening_id TEXT NOT NULL,
+        tanggal_transfer TEXT NOT NULL,
+        catatan_transfer TEXT,
+        FOREIGN KEY (sumber_rekening_id) REFERENCES rekening (id_rekening) ON DELETE RESTRICT,
+        FOREIGN KEY (tujuan_rekening_id) REFERENCES rekening (id_rekening) ON DELETE RESTRICT
       )''');
   }
 
